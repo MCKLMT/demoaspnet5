@@ -10,19 +10,3 @@ jobs:
       targetType: 'inline'
       script: |
         echo "This job will running on env '${{ parameters.environment }}'' with connection '${{ parameters.azureConnectionName }}'' and with the webapp name '${{ parameters.webAppName }}'"
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download the build artifacts'
-    inputs:
-      buildType: 'current'
-      downloadType: 'single'
-      artifactName: 'drop'
-      downloadPath: '$(System.DefaultWorkingDirectory)'
-  - task: AzureRmWebAppDeployment@4
-    displayName: 'Deploy to App Service'
-    inputs:
-      ConnectionType: 'AzureRM'
-      azureSubscription: '${{ parameters.azureConnectionName }}'
-      appType: 'webAppLinux'
-      WebAppName: '${{ parameters.webAppName }}'
-      packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-      RuntimeStack: 'DOTNET|5.0'
