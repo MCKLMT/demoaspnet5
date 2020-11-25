@@ -2,7 +2,7 @@ jobs:
   - job: 'Build'
     displayName: "Build Azure WebApp"
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'Ubuntu-20.04'
 
     steps:
         - task: UseDotNet@2
