@@ -3,7 +3,7 @@ jobs:
     displayName: 'Deploy RM Azure Functons'
     environment: 'Dev'
     variables:
-      - group: 'webapp-test-env-variable-group'
+      - group: 'webapp-dev-env-variable-group'
     pool:
       vmImage: 'Ubuntu-latest'
     strategy:
@@ -25,7 +25,7 @@ jobs:
               appType: 'webAppLinux'
               WebAppName: 'helloworld-dev-mimott'
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-              RuntimeStack: 'DOTNETCORE|3.1'
+              RuntimeStack: 'DOTNET|5.0'
 
           - task: Bash@3
             inputs:
