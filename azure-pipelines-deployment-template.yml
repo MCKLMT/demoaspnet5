@@ -1,7 +1,3 @@
-parameters:
-  environment: ''
-  webAppName: ''
-
 jobs:
   - deployment: Deploy
     displayName: 'Deploy WebApp'
