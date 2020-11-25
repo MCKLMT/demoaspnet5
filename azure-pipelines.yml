@@ -18,3 +18,4 @@ stages:
     parameters:
       environment: 'Dev'
       webAppName: $(WebAppName)
+      yesNo: false # set to a non-boolean value to have the build fail
