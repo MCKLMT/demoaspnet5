@@ -3,7 +3,7 @@ parameters:
   webAppName: ''
   azureConnectionName: ''
 jobs:
-  - deployment: Deploy
+  - deployment: DeployWebApp
     displayName: "Deploy Azure WebApp"
     environment: ${{ parameters.environment }}
     pool:
@@ -19,3 +19,11 @@ jobs:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
+          - task: AzureRmWebAppDeployment@4`
+            displayName: 'Deploy to AppService'
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: '${{ parameters.azureConnectionName }}'
+              appType: 'webAppLinux'
+              WebAppName: '${{ parameters.webAppName }}'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
