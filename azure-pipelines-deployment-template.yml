@@ -19,3 +19,9 @@ jobs:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
+          - task: AzureRMWebAppDeployment@4
+            displayName: Azure App Service Deploy
+            inputs:
+              appType: webAppLinux
+              ConnectedServiceName: ${{ parameters.azureConnectionName }}
+              WebAppName: ${{ parameters.webAppName }}
