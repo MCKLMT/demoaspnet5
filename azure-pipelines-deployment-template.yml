@@ -1,4 +1,3 @@
-# job_build_app.yml
 parameters:
   name: ''
   certificate: ''

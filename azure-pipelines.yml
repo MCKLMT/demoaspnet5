@@ -1,22 +1,21 @@
-# Basic nightly_builds.yml
 stages:
   - stage: Build
     jobs:
-    - template: job_build_app.yml
+    - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'dev'
         certificate: 'certificat-dev'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
 
-    - template: job_build_app.yml
+    - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'staging'
         certificate: 'certificat-staging'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
 
-    - template: job_build_app.yml
+    - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'production'
         certificate: 'certificat-production'
