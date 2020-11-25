@@ -2,6 +2,8 @@ jobs:
   - deployment: Deploy
     displayName: 'Deploy RM Azure Functons'
     environment: 'Dev'
+    variables:
+      - group: 'webapp-test-env-variable-group'
     pool:
       vmImage: 'Ubuntu-latest'
     strategy:
@@ -24,3 +26,10 @@ jobs:
               appName: 'helloworld-dev-mimott'
               resourceGroupName: 'helloworld-dev-rg'
               package: $(System.DefaultWorkingDirectory)/**/*.zip
+
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Write your commands here
+                echo '$(AzureConnectionName)'
