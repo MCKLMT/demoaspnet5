@@ -19,8 +19,8 @@ jobs:
           - task: AzureWebApp@1
             displayName: Release package to Azure Funcion App
             inputs:
-              azureSubscription: $
+              azureSubscription: $(azureSubscription)
               appType: webAppLinux
-              appName: $
-              resourceGroupName: $
+              appName: $(appName)
+              resourceGroupName: $(resourceGroupName)
               package: $(System.DefaultWorkingDirectory)/**/*.zip
