@@ -1,5 +1,5 @@
 parameters:
-  name: ''
+  environment: ''
   webAppName: ''
   frameworkVersion: ''
   toolVersion: ''
@@ -12,6 +12,6 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        echo This job will running on env ${{ parameters.name }} with framework version ${{ parameters.frameworkVersion }} and tool ${{ parameters.toolVersion }} with the webapp name ${{ parameters.webAppName }}
+        echo This job will running on env ${{ parameters.environment }} with framework version ${{ parameters.frameworkVersion }} and tool ${{ parameters.toolVersion }} with the webapp name ${{ parameters.webAppName }}
 
     # All the tasks you need to build the project...
