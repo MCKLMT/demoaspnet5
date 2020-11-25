@@ -20,31 +20,3 @@ stages:
       appName: '$(WebAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'Dev'
-
-- stage: DeployTEST
-  displayName: 'Deploy to TEST environment'
-  condition: succeeded()
-  dependsOn: Build
-  variables:
-  - group: 'webapp-test-env-variable-group'
-  jobs:
-  - template: azure-pipelines-deployment-template.yml
-    parameters:
-      azureSubscription: '$(AzureConnectionName)'
-      appName: '$(WebAppName)'
-      resourceGroupName: '$(ResourceGroupName)'
-      environment: 'Test'
-
-- stage: DeployPROD
-  displayName: 'Deploy to PROD environment'
-  condition: succeeded()
-  dependsOn: Build
-  variables:
-  - group: 'webapp-prod-env-variable-group'
-  jobs:
-  - template: azure-pipelines-deployment-template.yml
-    parameters:
-      azureSubscription: '$(AzureConnectionName)'
-      appName: '$(WebAppName)'
-      resourceGroupName: '$(ResourceGroupName)'
-      environment: 'Prod'
