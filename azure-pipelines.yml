@@ -1,23 +1,25 @@
 stages:
   - stage: Build
+    variables:
+    - group: 'webapp-dev-env-variable-group'
     jobs:
     - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'dev'
-        certificate: 'certificat-dev'
+        webAppName: '$(WebAppName)'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
 
     - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'staging'
-        certificate: 'certificat-staging'
+        webAppName: '$(WebAppName)'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
 
     - template: azure-pipelines-deployment-template.yml
       parameters:
         name: 'production'
-        certificate: 'certificat-production'
+        webAppName: '$(WebAppName)'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
