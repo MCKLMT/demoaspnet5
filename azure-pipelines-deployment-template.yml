@@ -1,3 +1,6 @@
+parameters:
+  -
+
 jobs:
   - deployment: Deploy
     displayName: 'Deploy WebApp'
@@ -22,15 +25,8 @@ jobs:
             displayName: 'Deploy to App Service'
             inputs:
               ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Internal Subscription 1'
+              azureSubscription: '$(AzureConnectionName)'
               appType: 'webAppLinux'
-              WebAppName: 'helloworld-dev-mimott'
+              WebAppName: '$(WebAppName)'
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
               RuntimeStack: 'DOTNET|5.0'
-
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                # Write your commands here
-                echo '$(AzureConnectionName)'
