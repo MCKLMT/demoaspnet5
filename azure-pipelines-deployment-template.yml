@@ -4,7 +4,7 @@ parameters:
 jobs:
   - deployment: Deploy
     displayName: 'Deploy WebApp'
-    environment: $(environment)
+    environment: ${{ parameters.environment }}
     variables:
       - group: 'webapp-dev-env-variable-group'
     pool:
@@ -13,6 +13,14 @@ jobs:
       runOnce:
         deploy:
           steps:
+
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                echo This job will running on env ${{ parameters.environment }} and ${{ parameters.environment }}
+
+
           - task: DownloadBuildArtifacts@0
             displayName: 'Download the build artifacts'
             inputs:
@@ -27,6 +35,6 @@ jobs:
               ConnectionType: 'AzureRM'
               azureSubscription: '$(AzureConnectionName)'
               appType: 'webAppLinux'
-              WebAppName: '$(WebAppName)'
+              WebAppName: '${{ parameters.WebAppName }}'
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
               RuntimeStack: 'DOTNET|5.0'
