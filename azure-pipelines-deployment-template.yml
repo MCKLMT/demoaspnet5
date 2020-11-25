@@ -1,7 +1,7 @@
 jobs:
   - deployment: Deploy
-    displayName: "Deploy RM Azure Functons"
-    environment: $
+    displayName: 'Deploy RM Azure Functons'
+    environment: 'Dev'
     pool:
       vmImage: 'Ubuntu-latest'
     strategy:
@@ -19,8 +19,8 @@ jobs:
           - task: AzureWebApp@1
             displayName: Release package to Azure WebApp
             inputs:
-              azureSubscription: $
+              azureSubscription: 'Microsoft Internal Consumption 1'
               appType: webAppLinux
-              appName: $
-              resourceGroupName: $
+              appName: 'helloworld-dev-mimott'
+              resourceGroupName: 'helloworld-dev-rg'
               package: $(System.DefaultWorkingDirectory)/**/*.zip
