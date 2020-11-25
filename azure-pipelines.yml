@@ -1,8 +1,4 @@
 stages:
-  - stage: Build
-    displayName: 'Build RM Azure WebApp'
-    jobs:
-    - template: azure-pipelines-build-template.yml
   - stage: 'DeployDev'
     dependsOn: Build
     variables:
