@@ -16,7 +16,7 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureSubscription: '$(AzureConnectionName)'
+      azureSubscription: 'Microsoft Internal Subscription 1'
       appName: '$(WebAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'Dev'
