@@ -1,20 +1,24 @@
-trigger:
-- master
-
+# Basic nightly_builds.yml
 stages:
-- stage: Build
-  displayName: 'Build RM Azure WebApp'
-  jobs:
-  - template: azure-pipelines-build-template.yml
+  - stage: Build
+    jobs:
+    - template: job_build_app.yml
+      parameters:
+        name: 'dev'
+        certificate: 'certificat-dev'
+        frameworkVersion: '5.0'
+        toolVersion: '1.0'
 
-- stage: DeployDEV
-  displayName: 'Deploy to DEV'
-  condition: succeeded()
-  dependsOn: Build
-  variables:
-  - group: 'webapp-dev-env-variable-group'
-  jobs:
-  - template: azure-pipelines-deployment-template.yml
-    parameters:
-      environment: 'Dev'
-      yesNo: true # set to a non-boolean value to have the build fail
+    - template: job_build_app.yml
+      parameters:
+        name: 'staging'
+        certificate: 'certificat-staging'
+        frameworkVersion: '5.0'
+        toolVersion: '1.0'
+
+    - template: job_build_app.yml
+      parameters:
+        name: 'production'
+        certificate: 'certificat-production'
+        frameworkVersion: '5.0'
+        toolVersion: '1.0'
