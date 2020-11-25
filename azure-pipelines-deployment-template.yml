@@ -5,7 +5,7 @@ parameters:
   toolVersion: ''
 
 jobs:
-- job: Build_app_${{ parameters.name }}
+- job: Build${{ parameters.environment }}
 
   steps:
   - task: Bash@3
