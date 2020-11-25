@@ -1,4 +1,8 @@
 stages:
+  - stage: Build
+    displayName: 'Build Azure WebApp'
+    jobs:
+    - template: azure-pipelines-build-template.yml
   - stage: DeployDev
     variables:
     - group: 'webapp-dev-env-variable-group'
