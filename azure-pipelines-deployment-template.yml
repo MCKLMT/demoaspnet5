@@ -19,7 +19,7 @@ jobs:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
-          - task: AzureRmWebAppDeployment@4`
+          - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy to AppService'
             inputs:
               ConnectionType: 'AzureRM'
