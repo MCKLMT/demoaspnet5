@@ -4,7 +4,6 @@ stages:
     jobs:
     - template: azure-pipelines-build-template.yml
   - stage: 'DeployDev'
-    condition: succeeded()
     dependsOn: Build
     variables:
     - group: 'webapp-dev-env-variable-group'
@@ -15,7 +14,6 @@ stages:
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
   - stage: 'DeployTest'
-    condition: succeeded()
     dependsOn: Build
     variables:
     - group: 'webapp-test-env-variable-group'
@@ -26,7 +24,6 @@ stages:
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
   - stage: 'DeployProd'
-    condition: succeeded()
     dependsOn: Build
     variables:
     - group: 'webapp-prod-env-variable-group'
