@@ -7,16 +7,3 @@ stages:
   jobs:
   - template: azure-pipelines-build-template.yml
 
-- stage: DeployDEV
-  displayName: 'Deploy to DEV environment'
-  condition: succeeded()
-  dependsOn: Build
-  variables:
-  - group: 'webapp-dev-env-variable-group'
-  jobs:
-  - template: azure-pipelines-deployment-template.yml
-    parameters:
-      azureSubscription: 'Microsoft Internal Subscription 1'
-      appName: '$(WebAppName)'
-      resourceGroupName: '$(ResourceGroupName)'
-      environment: 'Dev'
