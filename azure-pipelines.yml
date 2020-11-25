@@ -1,5 +1,5 @@
 stages:
-  - stage: 'Build Dev'
+  - stage: 'BuildDev'
     variables:
     - group: 'webapp-dev-env-variable-group'
     jobs:
@@ -9,7 +9,7 @@ stages:
         webAppName: '$(WebAppName)'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
-  - stage: 'Build Test'
+  - stage: 'BuildTest'
     variables:
     - group: 'webapp-test-env-variable-group'
     jobs:
@@ -19,7 +19,7 @@ stages:
         webAppName: '$(WebAppName)'
         frameworkVersion: '5.0'
         toolVersion: '1.0'
-  - stage: 'Build Prod'
+  - stage: 'BuildProd'
     variables:
     - group: 'webapp-prod-env-variable-group'
     jobs:
