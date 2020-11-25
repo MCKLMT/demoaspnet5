@@ -17,7 +17,7 @@ jobs:
               downloadPath: '$(System.DefaultWorkingDirectory)'
 
           - task: AzureWebApp@1
-            displayName: Release package to Azure Funcion App
+            displayName: Release package to Azure WebApp
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
