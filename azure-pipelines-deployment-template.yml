@@ -1,11 +1,11 @@
 jobs:
   - deployment: Deploy
-    displayName: 'Deploy RM Azure Functons'
-    environment: 'Dev'
+    displayName: 'Deploy WebApp'
+    environment: $(environment)
     variables:
       - group: 'webapp-dev-env-variable-group'
     pool:
-      vmImage: 'Ubuntu-latest'
+      vmImage: 'Ubuntu-20.04'
     strategy:
       runOnce:
         deploy:
@@ -19,6 +19,7 @@ jobs:
               downloadPath: '$(System.DefaultWorkingDirectory)'
 
           - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy to App Service'
             inputs:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Internal Subscription 1'

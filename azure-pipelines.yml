@@ -8,10 +8,12 @@ stages:
   - template: azure-pipelines-build-template.yml
 
 - stage: DeployDEV
-  displayName: 'Deploy to DEV environment'
+  displayName: 'Deploy to DEV'
   condition: succeeded()
   dependsOn: Build
   variables:
   - group: 'webapp-dev-env-variable-group'
   jobs:
   - template: azure-pipelines-deployment-template.yml
+    parameters:
+      environment: 'Dev'

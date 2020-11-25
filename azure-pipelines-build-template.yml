@@ -6,7 +6,7 @@ jobs:
   - job: 'Build'
     displayName: "Build RM Azure WebApp"
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'Ubuntu-20.04'
 
     steps:
         - task: UseDotNet@2
@@ -43,7 +43,7 @@ jobs:
             rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output"
             includeRootFolder: false
             archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
-          
+
         - task: PublishBuildArtifacts@1
           displayName: Publish package ready for deployment
           inputs:
