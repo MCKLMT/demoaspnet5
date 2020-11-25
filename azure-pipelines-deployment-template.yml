@@ -18,14 +18,14 @@ jobs:
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
 
-          - task: AzureWebApp@1
-            displayName: Release package to Azure WebApp
+          - task: AzureRmWebAppDeployment@4
             inputs:
-              azureSubscription: 'Microsoft Internal Consumption 1'
-              appType: webAppLinux
-              appName: 'helloworld-dev-mimott'
-              resourceGroupName: 'helloworld-dev-rg'
-              package: $(System.DefaultWorkingDirectory)/**/*.zip
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Microsoft Internal Subscription 1'
+              appType: 'webAppLinux'
+              WebAppName: 'helloworld-dev-mimott'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              RuntimeStack: 'DOTNETCORE|3.1'
 
           - task: Bash@3
             inputs:
