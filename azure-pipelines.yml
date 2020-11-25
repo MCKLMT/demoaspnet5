@@ -3,7 +3,6 @@ stages:
     displayName: 'Build RM Azure WebApp'
     jobs:
     - template: azure-pipelines-build-template.yml
-
   - stage: 'DeployDev'
     condition: succeeded()
     dependsOn: Build
@@ -15,7 +14,6 @@ stages:
         environment: 'Dev'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
-
   - stage: 'DeployTest'
     condition: succeeded()
     dependsOn: Build
@@ -27,7 +25,6 @@ stages:
         environment: 'Test'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
-
   - stage: 'DeployProd'
     condition: succeeded()
     dependsOn: Build
