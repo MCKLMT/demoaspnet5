@@ -17,3 +17,4 @@ stages:
   - template: azure-pipelines-deployment-template.yml
     parameters:
       environment: 'Dev'
+      WebAppName: $(WebAppName)
