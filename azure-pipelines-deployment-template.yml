@@ -24,5 +24,5 @@ jobs:
             inputs:
               ConnectionType: AzureRM
               appType: webAppLinux
-              ConnectedServiceName: '${{ parameters.azureConnectionName }}'
+              ConnectedServiceName: 'Microsoft Internal Consumption 1'
               WebAppName: '${{ parameters.webAppName }}'
