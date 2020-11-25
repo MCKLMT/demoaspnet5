@@ -1,7 +1,7 @@
 jobs:
   - deployment: Deploy
     displayName: "Deploy RM Azure Functons"
-    environment: $(environment)
+    environment: $
     pool:
       vmImage: 'Ubuntu-latest'
     strategy:
@@ -19,8 +19,8 @@ jobs:
           - task: AzureWebApp@1
             displayName: Release package to Azure WebApp
             inputs:
-              azureSubscription: $(azureSubscription)
+              azureSubscription: $
               appType: webAppLinux
-              appName: $(appName)
-              resourceGroupName: $(resourceGroupName)
+              appName: $
+              resourceGroupName: $
               package: $(System.DefaultWorkingDirectory)/**/*.zip
