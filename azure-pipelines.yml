@@ -16,8 +16,8 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
-      webAppName: '$(WebAppName)'
+      azureSubscription: '$(AzureConnectionName)'
+      appName: '$(WebAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'Dev'
 
@@ -30,8 +30,8 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
-      webAppName: '$(WebAppName)'
+      azureSubscription: '$(AzureConnectionName)'
+      appName: '$(WebAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'Test'
 
@@ -44,7 +44,7 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
-      webAppName: '$(WebAppName)'
+      azureSubscription: '$(AzureConnectionName)'
+      appName: '$(WebAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'Prod'
