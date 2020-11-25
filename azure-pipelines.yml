@@ -1,6 +1,4 @@
 stages:
-  - stage: Build
-
   - stage: DeployDev
     variables:
     - group: 'webapp-dev-env-variable-group'
