@@ -22,6 +22,7 @@ jobs:
           - task: AzureRMWebAppDeployment@4
             displayName: Azure App Service Deploy
             inputs:
+              ConnectionType: AzureRM
               appType: webAppLinux
-              ConnectedServiceName: ${{ parameters.azureConnectionName }}
-              WebAppName: ${{ parameters.webAppName }}
+              ConnectedServiceName: '${{ parameters.azureConnectionName }}'
+              WebAppName: '${{ parameters.webAppName }}'
