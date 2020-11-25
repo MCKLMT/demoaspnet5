@@ -19,10 +19,10 @@ jobs:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
-          - task: AzureRMWebAppDeployment@4
-            displayName: Azure App Service Deploy
+          - task: AzureRmWebAppDeployment@4
             inputs:
-              ConnectionType: AzureRM
-              appType: webAppLinux
-              ConnectedServiceName: 'Microsoft Internal Consumption 1'
-              WebAppName: '${{ parameters.webAppName }}'
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Microsoft Internal Subscription 1'
+              appType: 'webAppLinux'
+              WebAppName: 'helloworld-dev-mimott'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
