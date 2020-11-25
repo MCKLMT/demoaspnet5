@@ -2,7 +2,7 @@ jobs:
   - job: Build
     displayName: "Build RM Azure WebApp"
     pool:
-      vmImage: 'Ubuntu-20.04'
+      vmImage: Ubuntu-latest
     - task: UseDotNet@2
       inputs:
         packageType: 'sdk'
