@@ -1,6 +1,9 @@
 stages:
-  - stage: 'DeployDev'
-    dependsOn: Build
+  - stage: Build
+    displayName: 'Build Azure WebApp'
+    jobs:
+    - template: azure-pipelines-build-template.yml
+  - stage: DeployDev
     variables:
     - group: 'webapp-dev-env-variable-group'
     jobs:
@@ -9,8 +12,7 @@ stages:
         environment: 'Dev'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
-  - stage: 'DeployTest'
-    dependsOn: Build
+  - stage: DeployTest
     variables:
     - group: 'webapp-test-env-variable-group'
     jobs:
@@ -19,8 +21,7 @@ stages:
         environment: 'Test'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
-  - stage: 'DeployProd'
-    dependsOn: Build
+  - stage: DeployProd
     variables:
     - group: 'webapp-prod-env-variable-group'
     jobs:
