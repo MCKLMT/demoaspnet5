@@ -1,3 +1,9 @@
+parameters:
+  - name: environment
+    type: string
+  - name: webAppName
+    type: string
+
 jobs:
   - deployment: Deploy
     displayName: 'Deploy WebApp'
@@ -15,7 +21,7 @@ jobs:
             inputs:
               targetType: 'inline'
               script: |
-                echo This job will running on env ${{ parameters.environment }} and ${{ parameters.WebAppName }}
+                echo This job will running on env ${{ parameters.environment }} and ${{ parameters.webAppName }}
 
           - task: DownloadBuildArtifacts@0
             displayName: 'Download the build artifacts'
@@ -31,6 +37,6 @@ jobs:
               ConnectionType: 'AzureRM'
               azureSubscription: '$(AzureConnectionName)'
               appType: 'webAppLinux'
-              WebAppName: '${{ parameters.WebAppName }}'
+              WebAppName: '${{ parameters.webAppName }}'
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
               RuntimeStack: 'DOTNET|5.0'
