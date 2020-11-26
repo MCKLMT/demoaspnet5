@@ -12,6 +12,13 @@ jobs:
       runOnce:
         deploy:
           steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download the build artifacts'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
               deploymentScope: 'Resource Group'
@@ -21,17 +28,10 @@ jobs:
               resourceGroupName: 'helloworld-dev-rg'
               location: 'France Central'
               templateLocation: 'Linked artifact'
-              csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
-              csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
+              csmFile: '$(Build.ArtifactStagingDirectory)/Infrastructure/Infrastructure/azuredeploy.json'
+              csmParametersFile: '$(Build.ArtifactStagingDirectory)/Infrastructure/Infrastructure/azuredeploy.parameters.json'
               overrideParameters: -webAppName helloworld-dev-mimott
               deploymentMode: 'Incremental'
-          - task: DownloadBuildArtifacts@0
-            displayName: 'Download the build artifacts'
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(System.DefaultWorkingDirectory)'
           - task: AzureRmWebAppDeployment@4
             inputs:
               ConnectionType: 'AzureRM'
