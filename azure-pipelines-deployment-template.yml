@@ -4,7 +4,7 @@ parameters:
   azureConnectionName: ''
 jobs:
   - deployment: DeployWebApp
-    displayName: "Deploy Azure WebApp"
+    displayName: "Deploy Azure environment"
     environment: ${{ parameters.environment }}
     pool:
       vmImage: 'Ubuntu-20.04'
@@ -13,6 +13,7 @@ jobs:
         deploy:
           steps:
           - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Deploy infrastructure'
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'Microsoft Internal Subscription 1'
@@ -26,9 +27,10 @@ jobs:
               overrideParameters: -webAppName helloworld-dev-mimott
               deploymentMode: 'Incremental'
           - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy webapp'
             inputs:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Internal Subscription 1'
               appType: 'webAppLinux'
               WebAppName: '${{ parameters.webAppName }}'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
