@@ -2,6 +2,9 @@ parameters:
   environment: ''
   webAppName: ''
   azureConnectionName: ''
+  subscriptionId: ''
+  resourceGroupName: ''
+  region: ''
 jobs:
   - deployment: DeployWebApp
     displayName: "Deploy Azure environment"
@@ -17,20 +20,21 @@ jobs:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'Microsoft Internal Subscription 1'
-              subscriptionId: '5648d12a-ba49-4789-8793-6f7cc54e1556'
+              subscriptionId: '${{ parameters.subscriptionId }}'
               action: 'Create Or Update Resource Group'
-              resourceGroupName: 'helloworld-dev-rg'
-              location: 'France Central'
+              resourceGroupName: '${{ parameters.resourceGroupName }}'
+              location: '${{ parameters.region }}'
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/Infrastructure/Infrastructure/azuredeploy.json'
               csmParametersFile: '$(Pipeline.Workspace)/Infrastructure/Infrastructure/azuredeploy.parameters.json'
-              overrideParameters: -webAppName helloworld-dev-mimott
+              overrideParameters: -webAppName ${{ parameters.webAppName }}
               deploymentMode: 'Incremental'
           - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy webapp'
             inputs:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Internal Subscription 1'
-              appType: 'webAppLinux'
+              WebAppKind: 'webAppLinux'
               WebAppName: '${{ parameters.webAppName }}'
               packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+              RuntimeStack: 'DOTNET|5.0'

@@ -14,6 +14,9 @@ stages:
         environment: 'Dev'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
+        subscriptionId: '$(SubscriptionId)'
+        region: '$(Region)'
+        resourceGroupName: '$(ResourceGroupName)'
   - stage: DeployTest
     condition: succeeded()
     dependsOn: DeployDev
@@ -25,6 +28,9 @@ stages:
         environment: 'Test'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
+        subscriptionId: '$(SubscriptionId)'
+        region: '$(Region)'
+        resourceGroupName: '$(ResourceGroupName)'
   - stage: DeployProd
     condition: succeeded()
     dependsOn: DeployTest
@@ -36,3 +42,6 @@ stages:
         environment: 'Prod'
         webAppName: '$(WebAppName)'
         azureConnectionName: '$(AzureConnectionName)'
+        subscriptionId: '$(SubscriptionId)'
+        region: '$(Region)'
+        resourceGroupName: '$(ResourceGroupName)'
