@@ -26,4 +26,3 @@ jobs:
               appType: 'webAppLinux'
               WebAppName: '${{ parameters.webAppName }}'
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-              RuntimeStack: 'DOTNET|5.0'
