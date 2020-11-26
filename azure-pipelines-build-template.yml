@@ -41,7 +41,7 @@ jobs:
           artifactName: 'drop'
       - task: CopyFiles@2
         inputs:
-          contents: 'Infrastructure/**'
+          contents: 'Infrastructure/*.json'
           targetFolder: $(Build.ArtifactStagingDirectory)
       - task: PublishBuildArtifacts@1
         inputs:

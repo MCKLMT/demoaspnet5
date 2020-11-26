@@ -19,6 +19,13 @@ jobs:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.DefaultWorkingDirectory)'
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download the build artifacts'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'Infrastructure'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
               deploymentScope: 'Resource Group'
