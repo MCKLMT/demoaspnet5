@@ -21,5 +21,12 @@ jobs:
       run: dotnet restore WebApp
     - name: Build
       run: dotnet build WebApp --configuration Release --no-restore
+    - name: Publish
+      run: dotnet publish WebApp --configuration Release -o ./output/
     - name: Test
       run: dotnet test WebApp --no-restore --verbosity normal
+    - name: Publish artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: aspnet-webapp
+        path: ./output/
