@@ -37,4 +37,4 @@ jobs:
               WebAppKind: 'webAppLinux'
               WebAppName: '${{ parameters.webAppName }}'
               packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-              RuntimeStack: 'DOTNET|5.0'
+              RuntimeStack: 'DOTNETCORE|5.0'
