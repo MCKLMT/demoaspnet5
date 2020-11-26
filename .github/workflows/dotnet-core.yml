@@ -34,5 +34,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: demogithub-mcklmt
-        publish-profile: ${{ secrets.AZUREPUBLISHPROFILE }}
+        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
         package: ./output/
