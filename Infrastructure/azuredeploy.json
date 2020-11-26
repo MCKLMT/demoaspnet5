@@ -19,7 +19,7 @@
     },
     "linuxFxVersion": {
       "type": "string",
-      "defaultValue": "DOTNET|5.0",
+      "defaultValue": "DOTNETCORE|5.0",
       "metadata": {
         "description": "The Runtime stack of current web app"
       }
@@ -61,7 +61,13 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
-          "linuxFxVersion": "[parameters('linuxFxVersion')]"
+          "linuxFxVersion": "[parameters('linuxFxVersion')]",
+          "appSettings": [
+            {
+              "name": "WEBSITE_WEBDEPLOY_USE_SCM",
+              "value": "true"
+            }
+          ]
         }
       }
     }
