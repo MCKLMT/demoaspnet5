@@ -30,6 +30,23 @@ jobs:
       with:
         name: aspnet-webapp
         path: ./output/
+    - name: Deploy Azure Resource Manager (ARM) Template
+      uses: Azure/arm-deploy@v1
+      with:
+        # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+        scope: resourcegroup
+        # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
+        subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+        # Provide the name of a resource group, only required for resource Group deployments.
+        resourceGroupName: DemoGitHub-rg
+        # Specify the path or URL to the Azure Resource Manager template.
+        template: ./Infrastructure/azuredeploy.json
+        # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+        deploymentMode: Incremental
+        # Specifies the name of the resource group deployment to create.
+        deploymentName: webapp
+        # Supply deployment parameter values.
+        parameters: webAppName=demogithub-mcklmt
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with: 
