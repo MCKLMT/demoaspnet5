@@ -21,8 +21,8 @@ jobs:
               resourceGroupName: 'helloworld-dev-rg'
               location: 'France Central'
               templateLocation: 'Linked artifact'
-              csmFile: '$(System.DefaultWorkingDirectory)/Infrastructure/azuredeploy.json'
-              csmParametersFile: $(System.DefaultWorkingDirectory)/Infrastructure/azuredeploy.parameters.json'
+              csmFile: '$(System.DefaultWorkingDirectory)/**/azuredeploy.json'
+              csmParametersFile: $(System.DefaultWorkingDirectory)/**/azuredeploy.parameters.json'
               overrideParameters: -webAppName helloworld-dev-mimott
               deploymentMode: 'Incremental'
           - task: DownloadBuildArtifacts@0
