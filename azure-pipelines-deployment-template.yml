@@ -12,6 +12,19 @@ jobs:
       runOnce:
         deploy:
           steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'Microsoft Internal Subscription 1'
+              subscriptionId: '5648d12a-ba49-4789-8793-6f7cc54e1556'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'helloworld-dev-rg'
+              location: 'France Central'
+              templateLocation: 'Linked artifact'
+              csmFile: 'Infrastructure/azuredeploy.json'
+              csmParametersFile: 'Infrastructure/azuredeploy.parameters.json'
+              overrideParameters: -webAppName helloworld-dev-mimott
+              deploymentMode: 'Incremental'
           - task: DownloadBuildArtifacts@0
             displayName: 'Download the build artifacts'
             inputs:
