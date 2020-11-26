@@ -21,8 +21,8 @@ jobs:
               resourceGroupName: 'helloworld-dev-rg'
               location: 'France Central'
               templateLocation: 'Linked artifact'
-              csmFile: '/home/vsts/work/1/Infrastructure/Infrastructure/azuredeploy.json'
-              csmParametersFile: '/home/vsts/work/1/Infrastructure/Infrastructure/azuredeploy.parameters.json'
+              csmFile: '$(Pipeline.Workspace)/Infrastructure/Infrastructure/azuredeploy.json'
+              csmParametersFile: '$(Pipeline.Workspace)/Infrastructure/Infrastructure/azuredeploy.parameters.json'
               overrideParameters: -webAppName helloworld-dev-mimott
               deploymentMode: 'Incremental'
           - task: AzureRmWebAppDeployment@4
