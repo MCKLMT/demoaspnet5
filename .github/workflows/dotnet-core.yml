@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  Build:
 
     runs-on: Ubuntu-20.04
 
@@ -30,7 +30,8 @@ jobs:
       with:
         name: aspnet-webapp
         path: ./output/
-    - uses: azure/login@v1
+    - name: Login to Azure
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy Azure Resource Manager (ARM) Template
