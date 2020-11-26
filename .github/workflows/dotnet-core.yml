@@ -30,6 +30,9 @@ jobs:
       with:
         name: aspnet-webapp
         path: ./output/
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy Azure Resource Manager (ARM) Template
       uses: Azure/arm-deploy@v1
       with:
