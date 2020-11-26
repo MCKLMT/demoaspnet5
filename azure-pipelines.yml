@@ -16,7 +16,7 @@ stages:
         azureConnectionName: '$(AzureConnectionName)'
   - stage: DeployTest
     condition: succeeded()
-    dependsOn: Build
+    dependsOn: DeployTest
     variables:
     - group: 'webapp-test-env-variable-group'
     jobs:
@@ -27,7 +27,7 @@ stages:
         azureConnectionName: '$(AzureConnectionName)'
   - stage: DeployProd
     condition: succeeded()
-    dependsOn: Build
+    dependsOn: DeployTest
     variables:
     - group: 'webapp-prod-env-variable-group'
     jobs:
