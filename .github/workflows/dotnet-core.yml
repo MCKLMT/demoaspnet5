@@ -12,28 +12,49 @@ jobs:
     runs-on: Ubuntu-20.04
 
     steps:
+
     - uses: actions/checkout@v2
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100
+
     - name: Install dependencies
       run: dotnet restore WebApp
+
     - name: Build
       run: dotnet build WebApp --configuration Release --no-restore
+
     - name: Publish
       run: dotnet publish WebApp --configuration Release -o ./output/
+
     - name: Test
       run: dotnet test WebApp --no-restore --verbosity normal
+
     - name: Publish artifact
       uses: actions/upload-artifact@v1
       with:
         name: aspnet-webapp
         path: ./output/
+
     - name: Login to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Runs the bicep CLI action - individual files
+    - name: Run Bicep build
+      uses: aliencube/bicep-build-actions@v0.1
+      with:
+        files: Infrastructure/main.bicep
+
+    - name: Check the result of bicep build
+      shell: bash
+      run: |
+        shopt -s globstar
+        ls -altR **/main.json
+
     - name: Deploy Azure Resource Manager (ARM) Template
       uses: Azure/arm-deploy@v1
       with:
@@ -50,18 +71,20 @@ jobs:
         # Specifies the name of the resource group deployment to create.
         deploymentName: webapp
         # Supply deployment parameter values.
-        parameters: webAppName=demogithub-mcklmt
-    - name: Get WebApp/FunctionApp publish profile
+        parameters: webAppName=DemoGitHub-MCKLMT
+
+    - name: Get WebApp publish profile
       id: webapp
       uses: aliencube/publish-profile-actions@v1
       env:
         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       with:
         resourceGroupName: DemoGitHub-rg
-        appName: demogithub-mcklmt
+        appName: DemoGitHub-MCKLMT
+
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
-      with: 
-        app-name: demogithub-mcklmt
+      with:
+        app-name: DemoGitHub-MCKLMT
         publish-profile: ${{ steps.webapp.outputs.profile }}
         package: ./output/
