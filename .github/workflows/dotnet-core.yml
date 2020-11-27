@@ -52,8 +52,7 @@ jobs:
     - name: Check the result of bicep build
       shell: bash
       run: |
-        shopt -s globstar
-        ls -altR **/main.json
+        cat Infrastructure/main.json
 
     - name: Deploy Azure Resource Manager (ARM) Template
       uses: Azure/arm-deploy@v1
@@ -65,7 +64,7 @@ jobs:
         # Provide the name of a resource group, only required for resource Group deployments.
         resourceGroupName: DemoGitHub-rg
         # Specify the path or URL to the Azure Resource Manager template.
-        template: ./Infrastructure/azuredeploy.json
+        template: ./Infrastructure/main.json
         # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
         deploymentMode: Incremental
         # Specifies the name of the resource group deployment to create.
