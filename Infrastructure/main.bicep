@@ -29,6 +29,7 @@ resource webApp 'Microsoft.Web/sites@2020-06-01' = {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: 'DOTNETCORE|5.0'
+      alwaysOn: true
       appSettings: [
         {
           name: 'WEBSITE_WEBDEPLOY_USE_SCM'
