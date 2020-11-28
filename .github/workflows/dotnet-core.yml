@@ -43,12 +43,6 @@ jobs:
       with:
         sarif_file: devskim-results.sarif
 
-    - uses: microsoft/ApplicationInspector-Action@v1
-    - uses: actions/upload-artifact@v2
-      with:
-          name: AppInspectorResults
-          path: AppInspectorResults.json
-
     - name: Run Bicep build
       uses: aliencube/bicep-build-actions@v0.1
       with:
