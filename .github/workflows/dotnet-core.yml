@@ -32,7 +32,7 @@ jobs:
     - name: Test
       run: dotnet test WebApp --no-restore --verbosity normal
 
-    - name: Publish artifact
+    - name: Publish webapp artifact
       uses: actions/upload-artifact@v1
       with:
         name: aspnet-webapp
@@ -49,10 +49,11 @@ jobs:
       with:
         files: Infrastructure/main.bicep
 
-    - name: Check the result of bicep build
-      shell: bash
-      run: |
-        cat Infrastructure/main.json
+    - name: Publish ARM template artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: arm_template
+        path: ./Infrastructure/main.json
 
     - name: Deploy Azure Resource Manager (ARM) Template
       uses: Azure/arm-deploy@v1
