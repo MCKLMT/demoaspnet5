@@ -38,12 +38,17 @@ jobs:
         name: aspnet-webapp
         path: ./output/
 
-    - name: Login to Azure
-      uses: azure/login@v1
+    - uses: microsoft/DevSkim-Action@v1
+    - uses: github/codeql-action/upload-sarif@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        sarif_file: devskim-results.sarif
 
-    # Runs the bicep CLI action - individual files
+    - uses: microsoft/ApplicationInspector-Action@v1
+    - uses: actions/upload-artifact@v2
+      with:
+          name: AppInspectorResults
+          path: AppInspectorResults.json
+
     - name: Run Bicep build
       uses: aliencube/bicep-build-actions@v0.1
       with:
@@ -54,6 +59,11 @@ jobs:
       with:
         name: arm_template
         path: ./Infrastructure/main.json
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Deploy Azure Resource Manager (ARM) Template
       uses: Azure/arm-deploy@v1
