@@ -2,103 +2,104 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   Build:
-
-    runs-on: Ubuntu-20.04
+    runs-on: ubuntu-20.04
 
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.100
- 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: csharp, javascript
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: csharp, javascript
 
-    - name: Install dependencies
-      run: dotnet restore WebApp
+      - name: Install dependencies
+        run: dotnet restore WebApp
 
-    - name: Build
-      run: dotnet build WebApp --configuration Release --no-restore
+      - name: Build
+        run: dotnet build WebApp --configuration Release --no-restore
 
-    - name: Publish
-      run: dotnet publish WebApp --configuration Release -o ./output/
+      - name: Publish
+        run: dotnet publish WebApp --configuration Release -o ./output/
 
-    - name: Test
-      run: dotnet test WebApp --no-restore --verbosity normal
+      - name: Test
+        run: dotnet test WebApp --no-restore --verbosity normal
 
-    - name: Publish webapp artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: aspnet-webapp
-        path: ./output/
+      - name: Publish webapp artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: aspnet-webapp
+          path: ./output/
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
-    - name: Run Bicep build
-      uses: aliencube/bicep-build-actions@v0.1
-      with:
-        files: Infrastructure/main.bicep
+      - name: Run Bicep build
+        uses: aliencube/bicep-build-actions@v0.1
+        with:
+          files: Infrastructure/main.bicep
 
-    - name: Publish ARM template artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: arm_template
-        path: ./Infrastructure/main.json
+      - name: Publish ARM template artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: arm_template
+          path: ./Infrastructure/main.json
 
   Deploy:
     needs: Build
 
-    runs-on: Ubuntu-20.04
+    runs-on: ubuntu-20.04
 
     steps:
+      - uses: actions/checkout@v2
 
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: actions/download-artifact@v2
 
-    - name: Deploy Azure Resource Manager (ARM) Template
-      uses: Azure/arm-deploy@v1
-      with:
-        # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
-        scope: resourcegroup
-        # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
-        subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-        # Provide the name of a resource group, only required for resource Group deployments.
-        resourceGroupName: DemoGitHub-rg
-        # Specify the path or URL to the Azure Resource Manager template.
-        template: ./Infrastructure/main.json
-        # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
-        deploymentMode: Incremental
-        # Specifies the name of the resource group deployment to create.
-        deploymentName: webapp
-        # Supply deployment parameter values.
-        parameters: webAppName=DemoGitHub-MCKLMT
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Get WebApp publish profile
-      id: webapp
-      uses: aliencube/publish-profile-actions@v1
-      env:
-        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      with:
-        resourceGroupName: DemoGitHub-rg
-        appName: DemoGitHub-MCKLMT
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: resourcegroup
+          # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          # Provide the name of a resource group, only required for resource Group deployments.
+          resourceGroupName: DemoGitHub-rg
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: ./Infrastructure/main.json
+          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+          deploymentMode: Incremental
+          # Specifies the name of the resource group deployment to create.
+          deploymentName: webapp
+          # Supply deployment parameter values.
+          parameters: webAppName=DemoGitHub-MCKLMT
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: DemoGitHub-MCKLMT
-        publish-profile: ${{ steps.webapp.outputs.profile }}
-        package: ./output/
+      - name: Get WebApp publish profile
+        id: webapp
+        uses: aliencube/publish-profile-actions@v1
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        with:
+          resourceGroupName: DemoGitHub-rg
+          appName: DemoGitHub-MCKLMT
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: DemoGitHub-MCKLMT
+          publish-profile: ${{ steps.webapp.outputs.profile }}
+          package: ./output/
