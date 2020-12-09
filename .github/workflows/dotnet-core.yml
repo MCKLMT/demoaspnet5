@@ -58,6 +58,7 @@ jobs:
         path: ./Infrastructure/main.json
 
   Deploy:
+    needs: Build
 
     runs-on: Ubuntu-20.04
 
