@@ -18,11 +18,6 @@ jobs:
         with:
           dotnet-version: 5.0.100
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: csharp, javascript
-
       - name: Install dependencies
         run: dotnet restore WebApp
 
@@ -40,9 +35,6 @@ jobs:
         with:
           name: aspnet-webapp
           path: ./output/
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
 
       - name: Run Bicep build
         uses: aliencube/bicep-build-actions@v0.1
