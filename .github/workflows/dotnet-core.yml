@@ -53,8 +53,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
-
       - uses: actions/download-artifact@v2
 
       - name: Display structure of downloaded files
@@ -75,7 +73,7 @@ jobs:
           # Provide the name of a resource group, only required for resource Group deployments.
           resourceGroupName: DemoGitHub-rg
           # Specify the path or URL to the Azure Resource Manager template.
-          template: ./Infrastructure/main.json
+          template: ./arm_template/main.json
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           deploymentMode: Incremental
           # Specifies the name of the resource group deployment to create.
@@ -97,4 +95,4 @@ jobs:
         with:
           app-name: DemoGitHub-MCKLMT
           publish-profile: ${{ steps.webapp.outputs.profile }}
-          package: ./output/
+          package: ./aspnet-webapp/
