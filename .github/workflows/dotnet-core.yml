@@ -57,6 +57,9 @@ jobs:
 
       - uses: actions/download-artifact@v2
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
