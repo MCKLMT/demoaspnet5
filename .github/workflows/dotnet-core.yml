@@ -57,6 +57,12 @@ jobs:
         name: arm_template
         path: ./Infrastructure/main.json
 
+  Deploy:
+
+    runs-on: Ubuntu-20.04
+
+    steps:
+
     - name: Login to Azure
       uses: azure/login@v1
       with:
