@@ -52,7 +52,7 @@ jobs:
 
     environment:
       name: dev
-      url: ${{ steps.deploy-to-azure.outputs.app-url }}
+      url: https://demogh-dev.azurewebsites.net/
 
     runs-on: ubuntu-20.04
 
@@ -107,7 +107,7 @@ jobs:
 
     environment:
       name: test
-      url: ${{ steps.deploy-to-azure.outputs.app-url }}
+      url: https://demogh-test.azurewebsites.net/
 
     runs-on: ubuntu-20.04
 
@@ -162,7 +162,7 @@ jobs:
 
     environment:
       name: prod
-      url: ${{ steps.deploy-to-azure.outputs.app-url }}
+      url: https://demogh-prod.azurewebsites.net/
 
     runs-on: ubuntu-20.04
 
