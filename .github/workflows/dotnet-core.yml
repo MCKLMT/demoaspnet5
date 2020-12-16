@@ -47,8 +47,12 @@ jobs:
           name: arm_template
           path: ./Infrastructure/main.json
 
-  Deploy:
+  Deploy_to_Dev:
     needs: Build
+
+    environment:
+      name: dev
+      url: ${{ steps.deploy-to-azure.outputs.app-url }}
 
     runs-on: ubuntu-20.04
 
@@ -79,7 +83,7 @@ jobs:
           # Specifies the name of the resource group deployment to create.
           deploymentName: webapp
           # Supply deployment parameter values.
-          parameters: webAppName=DemoGitHub-MCKLMT
+          parameters: webAppName=demogh-dev
 
       - name: Get WebApp publish profile
         id: webapp
@@ -88,11 +92,122 @@ jobs:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         with:
           resourceGroupName: DemoGitHub-rg
-          appName: DemoGitHub-MCKLMT
+          appName: demogh-dev
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
+        id: deploy-to-azure
         with:
-          app-name: DemoGitHub-MCKLMT
+          app-name: demogh-dev
+          publish-profile: ${{ steps.webapp.outputs.profile }}
+          package: ./aspnet-webapp/
+
+  Deploy_to_Test:
+    needs: Deploy_to_Dev
+
+    environment:
+      name: test
+      url: ${{ steps.deploy-to-azure.outputs.app-url }}
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/download-artifact@v2
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: resourcegroup
+          # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          # Provide the name of a resource group, only required for resource Group deployments.
+          resourceGroupName: DemoGitHub-rg
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: ./arm_template/main.json
+          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+          deploymentMode: Incremental
+          # Specifies the name of the resource group deployment to create.
+          deploymentName: webapp
+          # Supply deployment parameter values.
+          parameters: webAppName=demogh-test
+
+      - name: Get WebApp publish profile
+        id: webapp
+        uses: aliencube/publish-profile-actions@v1
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        with:
+          resourceGroupName: DemoGitHub-rg
+          appName: demogh-test
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-azure
+        with:
+          app-name: demogh-test
+          publish-profile: ${{ steps.webapp.outputs.profile }}
+          package: ./aspnet-webapp/
+
+  Deploy_to_Prod:
+    needs: Deploy_to_Test
+
+    environment:
+      name: prod
+      url: ${{ steps.deploy-to-azure.outputs.app-url }}
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/download-artifact@v2
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+          scope: resourcegroup
+          # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          # Provide the name of a resource group, only required for resource Group deployments.
+          resourceGroupName: DemoGitHub-rg
+          # Specify the path or URL to the Azure Resource Manager template.
+          template: ./arm_template/main.json
+          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+          deploymentMode: Incremental
+          # Specifies the name of the resource group deployment to create.
+          deploymentName: webapp
+          # Supply deployment parameter values.
+          parameters: webAppName=demogh-prod
+
+      - name: Get WebApp publish profile
+        id: webapp
+        uses: aliencube/publish-profile-actions@v1
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        with:
+          resourceGroupName: DemoGitHub-rg
+          appName: demogh-prod
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-azure
+        with:
+          app-name: demogh-prod
           publish-profile: ${{ steps.webapp.outputs.profile }}
           package: ./aspnet-webapp/
