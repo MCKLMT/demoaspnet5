@@ -68,7 +68,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Azure Resource Manager (ARM) Template
-        uses: Azure/arm-deploy@v1
+        uses: azure/arm-deploy@v1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
@@ -84,15 +84,6 @@ jobs:
           deploymentName: webapp
           # Supply deployment parameter values.
           parameters: webAppName=demogh-dev
-
-      - name: Get WebApp publish profile
-        id: webapp
-        uses: aliencube/publish-profile-actions@v1
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-        with:
-          resourceGroupName: DemoGitHub-rg
-          appName: demogh-dev
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -123,7 +114,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Azure Resource Manager (ARM) Template
-        uses: Azure/arm-deploy@v1
+        uses: azure/arm-deploy@v1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
@@ -139,15 +130,6 @@ jobs:
           deploymentName: webapp
           # Supply deployment parameter values.
           parameters: webAppName=demogh-test
-
-      - name: Get WebApp publish profile
-        id: webapp
-        uses: aliencube/publish-profile-actions@v1
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-        with:
-          resourceGroupName: DemoGitHub-rg
-          appName: demogh-test
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -178,7 +160,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Azure Resource Manager (ARM) Template
-        uses: Azure/arm-deploy@v1
+        uses: azure/arm-deploy@v1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
           scope: resourcegroup
@@ -194,15 +176,6 @@ jobs:
           deploymentName: webapp
           # Supply deployment parameter values.
           parameters: webAppName=demogh-prod
-
-      - name: Get WebApp publish profile
-        id: webapp
-        uses: aliencube/publish-profile-actions@v1
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-        with:
-          resourceGroupName: DemoGitHub-rg
-          appName: demogh-prod
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
