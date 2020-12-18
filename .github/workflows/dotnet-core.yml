@@ -99,7 +99,7 @@ jobs:
         id: deploy-to-azure
         with:
           app-name: demogh-dev
-          publish-profile: ${{ steps.webapp.outputs.profile }}
+          #publish-profile: ${{ steps.webapp.outputs.profile }}
           package: ./aspnet-webapp/
 
   Deploy_to_Test:
@@ -154,7 +154,7 @@ jobs:
         id: deploy-to-azure
         with:
           app-name: demogh-test
-          publish-profile: ${{ steps.webapp.outputs.profile }}
+          #publish-profile: ${{ steps.webapp.outputs.profile }}
           package: ./aspnet-webapp/
 
   Deploy_to_Prod:
@@ -209,5 +209,5 @@ jobs:
         id: deploy-to-azure
         with:
           app-name: demogh-prod
-          publish-profile: ${{ steps.webapp.outputs.profile }}
+          #publish-profile: ${{ steps.webapp.outputs.profile }}
           package: ./aspnet-webapp/
