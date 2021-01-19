@@ -121,7 +121,7 @@ jobs:
           # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           # Provide the name of a resource group, only required for resource Group deployments.
-          resourceGroupName: DemoGitHub-rg
+          resourceGroupName: demoaspnet5-rg
           # Specify the path or URL to the Azure Resource Manager template.
           template: ./arm_template/main.json
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
@@ -167,7 +167,7 @@ jobs:
           # Provide the Id of the subscription which should be used, only required for resource Group or Subscription deployments.
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           # Provide the name of a resource group, only required for resource Group deployments.
-          resourceGroupName: DemoGitHub-rg
+          resourceGroupName: demoaspnet5-rg
           # Specify the path or URL to the Azure Resource Manager template.
           template: ./arm_template/main.json
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
